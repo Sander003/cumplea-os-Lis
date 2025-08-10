@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Feliz Cumpleaños Lis beth</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: url('https://wallpapers.com/images/hd/cute-animated-pictures-stz8gjhigf4cqiei.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Arial', sans-serif;
+    position: relative;
+    height: 100vh;
+    color: white;
+  }
+  /* Capa semitransparente para suavizar el fondo sin opacar texto y animaciones */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .top-text {
+    position: fixed;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: gold;
+    text-shadow: 0 0 8px #b8860b;
+    user-select: none;
+    z-index: 10;
+  }
+  .message {
+    position: absolute;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    user-select: none;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 5;
+  }
+  .heart {
+    position: absolute;
+    font-size: 2.5rem;
+    user-select: none;
+    pointer-events: none;
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+    opacity: 0.6;
+    z-index: 4;
+  }
+</style>
+</head>
+<body>
+
+<div class="top-text">¡Feliz Cumpleaños Lis beth!</div>
+
+<script>
+  // Frases cortas deseando lo mejor
+  const frases = [
+    'Que todos tus sueños se hagan realidad',
+    'Mucha alegría y amor en tu día',
+    'Eres una persona maravillosa',
+    'Que la felicidad te acompañe siempre',
+    'Disfruta de cada momento',
+    'Te mereces lo mejor del mundo',
+    'Sonríe y celebra tu vida',
+    'Brilla con luz propia',
+    'Un año más lleno de bendiciones',
+    'Felicidades con todo el cariño'
+  ];
+
+  const cantidadFrases = frases.length;
+  const cantidadCorazones = 15;
+
+  // Colores para los corazones: dorado, morado y rosa
+  const coloresCorazon = ['#FFD700', '#800080', '#e91e63'];
+
+  // Crear y añadir mensaje en pantalla
+  function crearMensaje(text) {
+    const div = document.createElement('div');
+    div.className = 'message';
+    div.textContent = text;
+    document.body.appendChild(div);
+    return div;
+  }
+
+  // Crear y añadir corazón con color aleatorio
+  function crearCorazon() {
+    const span = document.createElement('span');
+    span.className = 'heart';
+    span.textContent = '♥';
+    span.style.color = coloresCorazon[Math.floor(Math.random() * coloresCorazon.length)];
+    document.body.appendChild(span);
+    return span;
+  }
+
+  // Función para animar elementos con rebote suave lento y movimiento por pantalla
+  function animarElemento(el, speedRange = [0.3, 0.8]) {
+    let x = Math.random() * (window.innerWidth - el.offsetWidth);
+    let y = 50 + Math.random() * (window.innerHeight - 100 - el.offsetHeight);
+
+    let speedX = (Math.random() * (speedRange[1] - speedRange[0]) + speedRange[0]) * (Math.random() < 0.5 ? -1 : 1);
+    let speedY = (Math.random() * (speedRange[1] - speedRange[0]) + speedRange[0]) * (Math.random() < 0.5 ? -1 : 1);
+
+    const bounceFactor = 0.98;
+
+    function frame() {
+      x += speedX;
+      y += speedY;
+
+      if (x < 0) {
+        x = 0;
+        speedX = -speedX * bounceFactor;
+      } else if (x + el.offsetWidth > window.innerWidth) {
+        x = window.innerWidth - el.offsetWidth;
+        speedX = -speedX * bounceFactor;
+      }
+
+      if (y < 50) {
+        y = 50;
+        speedY = -speedY * bounceFactor;
+      } else if (y + el.offsetHeight > window.innerHeight) {
+        y = window.innerHeight - el.offsetHeight;
+        speedY = -speedY * bounceFactor;
+      }
+
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+
+      if (Math.abs(speedX) < 0.1) speedX *= 1.05;
+      if (Math.abs(speedY) < 0.1) speedY *= 1.05;
+
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  // Crear y animar frases
+  for (let i = 0; i < cantidadFrases; i++) {
+    const msg = crearMensaje(frases[i]);
+    animarElemento(msg, [0.2, 0.5]);
+  }
+
+  // Crear y animar corazones
+  for (let i = 0; i < cantidadCorazones; i++) {
+    const heart = crearCorazon();
+    animarElemento(heart, [0.1, 0.3]);
+  }
+
+  // Manejar cambio de tamaño ventana para no perder posiciones (simple)
+  window.addEventListener('resize', () => {
+    // No reinicia animaciones para no interrumpir movimiento, se puede mejorar este aspecto
+  });
+</script>
+</body>
+</html>
