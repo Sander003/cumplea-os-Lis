@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feliz Cumpleaños Lisbet 🎉</title>
+  <style>
+    :root{
+      --bg:#1a102b;
+      --accent1:#ff66b3; /* rosa */
+      --accent2:#a569ff; /* morado */
+      --accent3:#ffd700; /* dorado */
+      --text:#fff;
+    }
+    html,body{height:100%;margin:0;font-family:sans-serif;}
+    body{
+      background:linear-gradient(135deg, var(--accent1), var(--accent2));
+      display:flex;align-items:center;justify-content:center;
+      color:var(--text);
+      overflow:hidden;
+    }
+    .card{
+      width:90vw; max-width:800px; min-height:420px;
+      background:rgba(0,0,0,0.3);
+      border-radius:20px; padding:26px;
+      box-shadow:0 0 40px rgba(0,0,0,0.5);
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+      border:2px solid var(--accent3);
+    }
+    h1{
+      margin:0;font-size:clamp(28px,5vw,50px);
+      color:var(--accent3);
+    }
+    .name{
+      color:var(--accent1);
+      font-weight:700;
+      font-size:clamp(24px,4vw,38px);
+    }
+    .messages{
+      margin-top:16px;
+      height:40px;
+      position:relative;
+    }
+    .msg{
+      opacity:0; transform:translateY(8px);
+      animation:msg-cycle 6s linear infinite;
+      position:absolute; width:100%;
+    }
+    @keyframes msg-cycle{
+      0%{opacity:0; transform:translateY(8px)}
+      8%{opacity:1; transform:translateY(0)}
+      25%{opacity:1; transform:translateY(0)}
+      33%{opacity:0; transform:translateY(-8px)}
+      100%{opacity:0}
+    }
+    /* corazones */
+    .heart{
+      position:absolute; width:28px; height:28px;
+      transform:rotate(-45deg);
+      background:var(--accent1);
+      border-radius:50% 50% 0 0;
+      animation:floatUp linear infinite;
+    }
+    .heart:before, .heart:after{
+      content:""; position:absolute; width:28px; height:28px;
+      background:var(--accent1); border-radius:50%;
+    }
+    .heart:before{ top:-14px; left:0; }
+    .heart:after{ left:14px; top:0; }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1) rotate(-45deg); opacity:1; }
+      100% { transform: translateY(-120vh) scale(.6) rotate(-45deg); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1>¡Feliz Cumpleaños <span class="name">Lisbet</span>! 🎂</h1>
+    <div class="messages" id="messagesContainer"></div>
+  </div>
+  <script>
+    const mensajes = [
+      'Eres mi regalo favorito 🎁❤',
+      'Hoy brillas más que las estrellas ✨',
+      'Quiero ser parte de todos tus cumpleaños 💫',
+      'Mi pastel sería incompleto sin ti 🎂',
+      'Eres mi razón para sonreír 💖',
+      'Feliz vida, mi preciosa 🌹'
+    ];
+    const container = document.getElementById('messagesContainer');
+    mensajes.forEach((m,i)=>{
+      const span = document.createElement('div');
+      span.className = 'msg';
+      span.style.animationDelay = ${i * 1.2}s;
+      span.textContent = m;
+      container.appendChild(span);
+    });
+    function createHeart(){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random()*100 + '%';
+      h.style.top = '100%';
+      const dur = 4 + Math.random()*4;
+      h.style.animationDuration = dur + 's';
+      document.body.appendChild(h);
+      setTimeout(()=> h.remove(), dur*1000);
+    }
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
